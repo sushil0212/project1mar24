@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <title>Harry Potter And Golden Egg</title>
+
 </head>
 <body>
-    
+  <main>
+    <h1>HARRY POTTER AND GOLDEN EGG</h1>
+    <div id="game-intro">
+      <img src="harry potter poster.gif" alt="" class="logo-img">
+      <br>
+      <br>
+      <button id="start-button">Start Game</button>
+      <!-- <p>Use the left and right arrow to control the Harry Potter</p> -->
+    </div>
+    <div id="game-container">
+      <div>
+        <h2>Stats</h2>
+        <p>Score: <span id="score">0</span></p>
+        <p>Lives: <span id="lives">3</span></p>
+      </div>
+      <!-- #game-screen is initially hidden using CSS style display: none -->
+      <div id="game-screen"></div>
+    </div>
+
+    <!-- #game-end is initially hidden using CSS style display: none -->
+    <div id="game-end">
+      <img src="harry potter poster.gif" alt="" class="logo-img" />
+      <h1>Game Over</h1>
+      <br />
+      <button id="restart-button">Restart</button>
+    </div>
+
+  </main>
 </body>
+<script src="script.js"></script>
+<script src="games.js"></script>
+<script src="obstacles.js"></script>
+<script src="player.js"></script>
 </html>

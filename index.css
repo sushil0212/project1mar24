@@ -1,0 +1,59 @@
+  body {
+    padding: 0;
+    text-align: center;
+  }
+
+  #game-intro {
+    padding: 20px 0px;
+  }
+  #game-container {
+    display: flex;
+    width: 100vw;
+    padding: 20px 0px;
+    justify-content: center;
+  }
+  #game-screen {
+    display: none;
+    align-content: center;
+    padding: 20px 0px;
+    overflow: hidden;
+    position: relative;
+    background-image: url(opensky.jpg);
+    background-size: cover;
+    animation: slide 5s linear infinite;
+
+
+  }
+  @keyframes slide {
+    0% {
+      background-position: 1000px 0; /* Start from far right */
+    }
+    95% {
+      background-position: 0 0; /* Move to left edge */
+    }
+    100% {
+      background-position: -50px 0; /* Continue moving left slightly */
+    }
+  }
+  
+  #game-end {
+    display: none;
+  }
+  .logo-img {
+    width: 380px;
+  }
+  body button {
+    font-size: 30px;
+    background-color:green;
+    color: #fff;
+    padding: 15px 35px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: gold;
+  }
+  
