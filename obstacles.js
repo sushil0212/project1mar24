@@ -2,7 +2,7 @@ class Obstacle {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
     this.top = 20;
-    this.right = 0;
+    this.left = this.gameScreen.offsetWidth;
     this.width = 100;
     this.height = 140;
 
@@ -19,7 +19,7 @@ class Obstacle {
     obstacle.style.width = `${this.width}px`;
     obstacle.style.height = `${this.height}px`;
     obstacle.style.top = `${this.top}px`;
-    obstacle.style.right = `${this.right}px`;
+    obstacle.style.left = `${this.left}px`;
     return obstacle;
   }
 
@@ -30,17 +30,17 @@ class Obstacle {
   }
 
   move() {
-    this.right += 3;
-    this.element.style.right = `${this.right}px`;
+    this.left -= 3;
+    this.element.style.left = `${this.left}px`;
 
-    if (this.right > this.gameScreen.clientWidth) {
+    if (this.left + this.width < 0) {
       this.resetPosition();
     }
   }
 
   resetPosition() {
-    this.right = 0 - this.width;
-    this.element.style.right = `${this.right}px`;
+    this.left = this.gameScreen.offsetWidth;
+    this.element.style.left = `${this.left}px`;
   }
 }
 
@@ -49,7 +49,7 @@ function createContinuousObstacles() {
     const obstacle = new Obstacle(this.gameScreen);
 
     const removeInterval = setInterval(() => {
-      if (obstacle.right > gameScreen.clientWidth) {
+      if (obstacle.left + obstacle.width < 0) {
         obstacle.element.remove();
         clearInterval(obstacle.moveInterval);
         clearInterval(removeInterval);
