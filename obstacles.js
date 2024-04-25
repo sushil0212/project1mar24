@@ -1,7 +1,7 @@
 class Obstacle {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
-    this.top = 30;
+    this.top = 20;
     this.right = 0;
     this.width = 100;
     this.height = 140;
@@ -44,9 +44,9 @@ class Obstacle {
   }
 }
 
-function createContinuousObstacles(gameScreen) {
+function createContinuousObstacles() {
   function addObstacle() {
-    const obstacle = new Obstacle(gameScreen);
+    const obstacle = new Obstacle(this.gameScreen);
 
     const removeInterval = setInterval(() => {
       if (obstacle.right > gameScreen.clientWidth) {
@@ -62,5 +62,5 @@ function createContinuousObstacles(gameScreen) {
   addObstacle();
 }
 
-const gameScreen = document.getElementById("gameScreen");
-createContinuousObstacles(gameScreen);
+/* const gameScreen = document.getElementById("gameScreen");
+createContinuousObstacles(gameScreen); */
