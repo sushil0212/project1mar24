@@ -1,6 +1,9 @@
 class Obstacle {
-  constructor(gameScreen) {
+  constructor(gameScreen, level) {
     this.gameScreen = gameScreen;
+    if(level === 2) {
+    this.top = 400;
+    }
     this.top = 20;
     this.left = this.gameScreen.offsetWidth;
     this.width = 100;
