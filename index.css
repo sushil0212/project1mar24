@@ -14,11 +14,11 @@
     justify-content: center;
   }
   #game-screen {
+    background-image: url(images/gifSky.gif);
     display: none;
     align-content: center;
     overflow: hidden;
     position: relative;
-    background-image: url(images/gifSky.gif);
     background-size: cover;
     animation: slide 5s linear infinite;
 

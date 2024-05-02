@@ -5,6 +5,8 @@ class Player {
         this.top = top;
         this.width = width;
         this.height = height;
+        this.baseWidth = width; // Store original width
+        this.baseHeight = height; // Store original height
         this.directionX = 0;
         this.directionY = 0;
         this.element = document.createElement('img');
@@ -85,6 +87,23 @@ class Player {
                 clearInterval(flashInterval);
                 this.isFlashing = false;
             }
-        }, 100); 
+        }, 100);
+    }
+
+    // increase player size by 50px
+    increaseSize() {
+        this.width += 50;
+        this.height += 50;
+        this.element.style.width = `${this.width}px`;
+        this.element.style.height = `${this.height}px`;
+    }
+
+    //reset player size 
+    resetSize() {
+        this.width = this.baseWidth;
+        this.height = this.baseHeight;
+        this.element.style.width = `${this.width}px`;
+        this.element.style.height = `${this.height}px`;
     }
 }
+

@@ -4,7 +4,7 @@ class Game {
         this.gameScreen = document.getElementById('game-screen');
         this.gameEndScreen = document.getElementById('game-end');
         this.player = new Player(this.gameScreen, 300, 500, 100, 150, 'images/flyingpenguine.gif');
-        this.height = 700;
+        this.height = 730;
         this.width = 700;
         this.obstacles = [];
         this.eggs = [];
@@ -59,6 +59,15 @@ class Game {
     update() {
         this.player.move();
 
+            // Check for player size change based on score
+            if (this.score >= 10 && this.player.width === this.player.baseWidth) {
+                // Increase player size by 50px
+                this.player.increaseSize();
+            } else if (this.score < 10 && this.player.width > this.player.baseWidth) {
+                // Reset player size to original dimensions
+                this.player.resetSize();
+            }
+
         // Check for level change to level 2
         if (this.score >= 5) {
             if (this.level !== 2) {
@@ -70,9 +79,6 @@ class Game {
                 this.level = 1;
                 this.cannons.forEach(cannon => cannon.element.remove());
                 this.cannons = []
-
-                
-                // Optionally, show notification for level 1 if needed
             }
         }
 
