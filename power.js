@@ -19,7 +19,7 @@ class Power {
 
   createPowerElement() {
     const power = document.createElement('img');
-    power.src = this.type === 'black' ? 'blackegg.png' : 'goldenegg.jpg';
+    power.src = this.type === 'black' ? 'images/blackegg.png' : 'images/goldenEgg.png';
     power.style.position = 'absolute';
     power.style.width = `${this.width}px`;
     power.style.height = `${this.height}px`;

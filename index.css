@@ -1,6 +1,7 @@
   body {
     padding: 0;
     text-align: center;
+    
   }
 
   #game-intro {
@@ -15,26 +16,14 @@
   #game-screen {
     display: none;
     align-content: center;
-    padding: 20px 0px;
     overflow: hidden;
     position: relative;
-    background-image: url(opensky.jpg);
+    background-image: url(images/gifSky.gif);
     background-size: cover;
     animation: slide 5s linear infinite;
 
+  }
 
-  }
-  @keyframes slide {
-    0% {
-      background-position: 1000px 0; /* Start from far right */
-    }
-    95% {
-      background-position: 0 0; /* Move to left edge */
-    }
-    100% {
-      background-position: -50px 0; /* Continue moving left slightly */
-    }
-  }
   
   #game-end {
     display: none;
@@ -56,4 +45,11 @@
   h1 {
     color: gold;
   }
-  
+ /*  body {
+    padding: 0;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    background-image: url(images/branch-with-buds.jpg);
+    background-size: cover;
+  } */

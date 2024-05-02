@@ -17,7 +17,7 @@ class Obstacle {
 
   createObstacleElement() {
     const obstacle = document.createElement("img");
-    obstacle.src = "dragonImg-unscreen.gif";
+    obstacle.src = "images/dragonImg-unscreen.gif";
     obstacle.style.position = "absolute";
     obstacle.style.width = `${this.width}px`;
     obstacle.style.height = `${this.height}px`;

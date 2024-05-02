@@ -3,18 +3,30 @@ class Game {
         this.startScreen = document.getElementById('game-intro');
         this.gameScreen = document.getElementById('game-screen');
         this.gameEndScreen = document.getElementById('game-end');
-       // this.gameLevelScreen = document.getElementById('game-level');
-        this.player = new Player(this.gameScreen, 200, 500, 100, 150, 'flyingpenguine.gif');
-        this.height = 600;
-        this.width = 500;
+        this.player = new Player(this.gameScreen, 300, 500, 100, 150, 'images/flyingpenguine.gif');
+        this.height = 700;
+        this.width = 700;
         this.obstacles = [];
         this.eggs = [];
-        this.dragons = [];
+        this.cannonEggs = []
+        this.cannons = [];
         this.score = 0;
         this.lives = 10;
         this.isGameOver = false;
         this.level = 1;
-        this.isPaused = false
+        this.isPaused = false;
+        this.levelNotification = document.createElement('div');
+        this.levelNotification.id = 'level-notification';
+        this.levelNotification.style.position = 'absolute';
+        this.levelNotification.style.top = '50%';
+        this.levelNotification.style.left = '50%';
+        this.levelNotification.style.transform = 'translate(-50%, -50%)';
+        this.levelNotification.style.padding = '20px';
+        this.levelNotification.style.backgroundColor = 'green';
+        this.levelNotification.style.color = 'white';
+        this.levelNotification.style.fontSize = '24px';
+        this.levelNotification.style.display = 'none';
+        this.gameScreen.appendChild(this.levelNotification);
 
         this.gameLoop = this.gameLoop.bind(this);
     }
@@ -23,6 +35,7 @@ class Game {
         // Setting the game screen size
         this.gameScreen.style.height = `${this.height}px`;
         this.gameScreen.style.width = `${this.width}px`;
+    
 
         // Hiding the start screen
         this.startScreen.style.display = 'none';
@@ -37,35 +50,51 @@ class Game {
             return;
         }
 
-            this.updateStats();
-            this.update();
-     window.requestAnimationFrame(this.gameLoop);
+        this.updateStats();
+        this.update();
+
+        window.requestAnimationFrame(this.gameLoop);
     }
 
     update() {
         this.player.move();
 
-        // level 2 should be activated (check)
-        if(this.score < 5) this.level = 1
+        // Check for level change to level 2
         if (this.score >= 5) {
-            this.level = 2
-           //this.nextLevel()
-      
-        }
-        //if level 2, create dragons
-        if (Math.random() > 0.98 && this.dragons.length < 1 && this.level === 2) {
-            this.createDragon()
-        }    
+            if (this.level !== 2) {
+                this.level = 2;
+                this.showLevelNotification('Level 2', 'green', 'white');
+            }
+        } else {
+            if (this.level !== 1) {
+                this.level = 1;
+                this.cannons.forEach(cannon => cannon.element.remove());
+                this.cannons = []
 
+                
+                // Optionally, show notification for level 1 if needed
+            }
+        }
+
+        // Create cannons if level is 2
+        if (this.level === 2 && Math.random() > 0.98 && this.cannons.length < 1) {
+                // Create Level 2 cannon
+                const level2Cannon = new Level2Cannon(this.gameScreen, this.level);
+                this.cannons.push(level2Cannon);
+            }
+        
+
+        // Create obstacles
         if (Math.random() > 0.98 && this.obstacles.length < 1) {
             const newObstacle = new Obstacle(this.gameScreen, this.level);
             this.obstacles.push(newObstacle);
         }
 
+        // Handle obstacles
         this.obstacles.forEach((obstacle, index) => {
             obstacle.move();
 
-            if (Math.random() > 0.98 && this.eggs.length < 1) {
+            if (Math.random() > 0.99 && this.eggs.length < 2 && obstacle.left > 20 && obstacle.left + obstacle.width < this.width - 20) {
                 this.eggs.push(new Power(this.gameScreen, obstacle));
             }
 
@@ -81,7 +110,7 @@ class Game {
             }
         });
 
-        // Update egg movement and collision
+        // Handle eggs
         this.eggs.forEach((egg, index) => {
             egg.move();
 
@@ -97,55 +126,73 @@ class Game {
             }
         });
 
-        // Update Level 2 dragon movement and collision
-        this.dragons.forEach((dragon, index) => {
-            dragon.move();
+        this.cannonEggs.forEach((egg, index) => {
+            egg.move();
 
-            if (this.player.didCollide(dragon)) {
-                // Decrease both lives and score
-                this.lives--;
-                this.score -= 5;
+            if (this.player.didCollide(egg)) {
+                this.checkEgg(egg);
+                egg.element.remove();
+                this.cannonEggs.splice(index, 1);
+                this.score++;
                 this.updateStats();
-                dragon.element.remove();
-                this.dragons.splice(index, 1);
+            } else if (egg.top < 0) {
+                egg.element.remove();
+                this.cannonEggs.splice(index, 1);
             }
         });
 
+        // Handle cannons for level 2
+  
+            this.cannons.forEach((cannon, index) => {
+                cannon.move();
+
+                if (Math.random() > 0.99 && this.cannonEggs.length < 2 && cannon.left > 20 && cannon.left + cannon.width < this.width - 20) {
+                    this.cannonEggs.push(new Power2(this.gameScreen, cannon));
+                }
+    
+
+                if (this.player.didCollide(cannon)) {
+                    this.lives--;
+                    this.score -= 5;
+                    this.updateStats();
+                    cannon.element.remove();
+                    this.cannons.splice(index, 1);
+                }
+            });
+        
+
         // Check game over condition
-        if (this.lives === 0) {
+        if (this.lives === 0 || this.score <= -25) {
             this.endGame();
         }
     }
 
-    createDragon() {
-        // Create Level 2 dragon
-        const level2Dragon = new Level2Dragon(this.gameScreen);
-        this.dragons.push(level2Dragon);
+    showLevelNotification(message, bgColor, textColor) {
+        this.levelNotification.innerText = message;
+        this.levelNotification.style.backgroundColor = bgColor;
+        this.levelNotification.style.color = textColor;
+        this.levelNotification.style.display = 'block';
+
+        // Automatically hide the notification after 1 second
+        setTimeout(() => {
+            this.levelNotification.style.display = 'none';
+        }, 1000);
     }
+
+   
 
     endGame() {
         // Remove all elements from the screen
         this.player.element.remove();
         this.obstacles.forEach(obstacle => obstacle.element.remove());
         this.eggs.forEach(egg => egg.element.remove());
-        this.dragons.forEach(dragon => dragon.element.remove());
+        this.cannons.forEach(cannon => cannon.element.remove());
 
         this.isGameOver = true;
 
         // Hide the game screen and show the end screen
         this.gameScreen.style.display = 'none';
         this.gameEndScreen.style.display = 'block';
-    }
-
-    nextLevel(){
-        this.obstacles.forEach(obstacle => obstacle.element.remove());
-        this.eggs.forEach(egg => egg.element.remove());
-        this.dragons.forEach(dragon => dragon.element.remove());
-
-        //show the button
-        // call start game
-        // this.level = 2
-    
     }
 
     checkEgg(egg) {
@@ -165,4 +212,3 @@ class Game {
         livesElement.innerText = this.lives;
     }
 }
-

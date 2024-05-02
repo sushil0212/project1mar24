@@ -26,7 +26,7 @@ window.onload = function () {
           game.player.directionY = 2;
           break;
           case 'ArrowLeft':
-            game.player.directionX = -2;
+            game.player.directionX = -3;
             break;
             case 'ArrowRight':
               game.player.directionX = 2;
