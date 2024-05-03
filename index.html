@@ -5,38 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
   <title>Harry Potter And Golden Egg</title>
-
 </head>
 <body>
   <main>
+    <div id="full-window-bg" class="full-window-bg"></div> <!-- Full-window background div -->
     <div id="game-intro">
-      <h1>DRAGON AND GOLDEN EGG</h1>
-      <img src="images\harry potter poster.gif" alt="" class="logo-img">
+      <h1>GOLDEN EGG</h1>
+      <img src="images/harry potter poster.gif" alt="" class="logo-img">
       <br>
       <br>
-      <button id="start-button" title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.">Start Game</button>
-      <!-- <p>Use the left and right arrow to control the Harry Potter</p> -->
+      <button id="start-button">Start Game</button>
     </div>
-    <div id="game-container">
-      <div>
-        <h2>Stats</h2>
-        <p>Score: <span id="score">0</span></p>
-        <p>Lives: <span id="lives">3</span></p>
-      </div>
-      <!-- #game-screen is initially hidden using CSS style display: none -->
+    <div id="game-container" style="display: none;"> <!-- Initially hidden -->
       <div id="game-screen">
-       
+      </div>
+        <div id="stats-container">
+             <p>Score: <span id="score">0</span></p>
+             <p>Lives: <span id="lives">10</span></p>
+             <p>Time: <span id="count">10</span></p>
+      </div>
+      <div id="game-end">
+        <img src="images/harry potter poster.gif" alt="" class="logo-img" />
+        <h1>Game Over</h1>
+        <br />
+        <button id="restart-button">Restart</button>
       </div>
     </div>
-    <!-- #game-end is initially hidden using CSS style display: none -->
-    <div id="game-end">
-      <img src="images\harry potter poster.gif" alt="" class="logo-img" />
-      <h1>Game Over</h1>
-      <br />
-      <button id="restart-button">Restart</button>
-    </div>
-
   </main>
+
   <script src="power2.js"></script>
   <script src="power.js"></script>
   <script src="obstacles.js"></script>
