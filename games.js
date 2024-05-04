@@ -35,7 +35,7 @@ class Game {
     }
   
     start() {
-      this.fullWindowBg.style.backgroundImage = "url('images/branch-with-buds.jpg')";
+      this.fullWindowBg.style.backgroundImage = "url('images/nature.jpg')";
       this.fullWindowBg.style.display = 'block';
   
       this.gameScreen.style.height = `${this.height}px`;
